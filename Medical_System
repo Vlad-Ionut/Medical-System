@@ -149,7 +149,7 @@ private:
 };
 
 int main() {
-    // Exemplu de utilizare a claselor definite
+   
     Adresa adresa("Strada Principala 123", "Orasul X", "12345");
     Pacient pacient("Ion Popescu", 40, adresa);
     ConsultatieMedicala consultatie1("2023-10-26", "10:00 AM", pacient);
