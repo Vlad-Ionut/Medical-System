@@ -1,0 +1,165 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+// Clasa pentru reprezentarea unei adrese
+class Adresa {
+public:
+    Adresa(const std::string& strada, const std::string& oras, const std::string& codPostal)
+            : strada(strada), oras(oras), codPostal(codPostal) {}
+
+    // Constructor de copiere
+    Adresa(const Adresa& other)
+            : strada(other.strada), oras(other.oras), codPostal(other.codPostal) {}
+
+    // Operator de copiere
+    Adresa& operator=(const Adresa& other) {
+        if (this != &other) {
+            strada = other.strada;
+            oras = other.oras;
+            codPostal = other.codPostal;
+        }
+        return *this;
+    }
+
+    // Destructor
+    ~Adresa() {}
+
+    // Funcție membru publică pentru afișare
+    friend std::ostream& operator<<(std::ostream& os, const Adresa& adresa) {
+        os << "Strada: " << adresa.strada << ", Oras: " << adresa.oras << ", Cod Postal: " << adresa.codPostal;
+        return os;
+    }
+
+
+private:
+    std::string strada;
+    std::string oras;
+    std::string codPostal;
+};
+
+// Clasa pentru reprezentarea unui pacient
+class Pacient {
+public:
+    Pacient(const std::string& nume, int varsta, const Adresa& adresa)
+            : nume(nume), varsta(varsta), adresa(adresa) {}
+
+    // Constructor de copiere
+    Pacient(const Pacient& other)
+            : nume(other.nume), varsta(other.varsta), adresa(other.adresa) {}
+
+    // Operator de copiere
+    Pacient& operator=(const Pacient& other) {
+        if (this != &other) {
+            nume = other.nume;
+            varsta = other.varsta;
+            adresa = other.adresa;
+        }
+        return *this;
+    }
+
+    // Destructor
+    ~Pacient() {}
+
+    // Funcție membru publică pentru afișare
+    friend std::ostream& operator<<(std::ostream& os, const Pacient& pacient) {
+        os << "Nume: " << pacient.nume << ", Varsta: " << pacient.varsta << "\nAdresa: " << pacient.adresa;
+        return os;
+    }
+
+
+private:
+    std::string nume;
+    int varsta;
+    Adresa adresa;
+};
+
+// Clasa pentru reprezentarea unei consultatii medicale
+class ConsultatieMedicala {
+public:
+    ConsultatieMedicala(const std::string& data, const std::string& ora, const Pacient& pacient)
+            : data(data), ora(ora), pacient(pacient) {}
+
+    // Constructor de copiere
+    ConsultatieMedicala(const ConsultatieMedicala& other)
+            : data(other.data), ora(other.ora), pacient(other.pacient) {}
+
+    // Operator de copiere
+    ConsultatieMedicala& operator=(const ConsultatieMedicala& other) {
+        if (this != &other) {
+            data = other.data;
+            ora = other.ora;
+            pacient = other.pacient;
+        }
+        return *this;
+    }
+
+    // Destructor
+    ~ConsultatieMedicala() {}
+
+    // Funcție membru publică pentru afișare
+    friend std::ostream& operator<<(std::ostream& os, const ConsultatieMedicala& consultatie) {
+        os << "Data: " << consultatie.data << ", Ora: " << consultatie.ora << "\nPacient: " << consultatie.pacient;
+        return os;
+    }
+
+
+
+private:
+    std::string data;
+    std::string ora;
+    Pacient pacient;
+};
+
+// Clasa pentru reprezentarea unui istoric medical
+class IstoricMedical {
+public:
+    IstoricMedical(const Pacient& pacient, const std::vector<ConsultatieMedicala>& consultatii)
+            : pacient(pacient), consultatii(consultatii) {}
+
+    // Constructor de copiere
+    IstoricMedical(const IstoricMedical& other)
+            : pacient(other.pacient), consultatii(other.consultatii) {}
+
+    // Operator de copiere
+    IstoricMedical& operator=(const IstoricMedical& other) {
+        if (this != &other) {
+            pacient = other.pacient;
+            consultatii = other.consultatii;
+        }
+        return *this;
+    }
+
+    // Destructor
+    ~IstoricMedical() {}
+
+    // Funcție membru publică pentru afișare
+    friend std::ostream& operator<<(std::ostream& os, const IstoricMedical& istoric) {
+        os << "Pacient: " << istoric.pacient << "\nConsultatii Medicale:";
+        for (const ConsultatieMedicala& consultatie : istoric.consultatii) {
+            os << "\n" << consultatie;
+        }
+        return os;
+    }
+
+
+private:
+    Pacient pacient;
+    std::vector<ConsultatieMedicala> consultatii;
+};
+
+int main() {
+    // Exemplu de utilizare a claselor definite
+    Adresa adresa("Strada Principala 123", "Orasul X", "12345");
+    Pacient pacient("Ion Popescu", 40, adresa);
+    ConsultatieMedicala consultatie1("2023-10-26", "10:00 AM", pacient);
+    ConsultatieMedicala consultatie2("2023-11-02", "11:30 AM", pacient);
+    std::vector<ConsultatieMedicala> consultatii = {consultatie1, consultatie2};
+    IstoricMedical istoric(pacient, consultatii);
+
+    std::cout << "Istoric Medical:\n" << istoric << std::endl;
+
+
+
+    return 0;
+}
